@@ -1,8 +1,3 @@
-extern crate reqwest;
-extern crate clap;
-extern crate log;
-extern crate simple_logger;
-
 use reqwest::Url;
 use std::time::Duration;
 use clap::{Arg, App, ArgMatches};
@@ -14,6 +9,16 @@ struct RequestArguments {
 }
 
 fn main() {
+    let mut res: Result<usize, &'static str> = Ok(0);
+    res = res.and_then(|x| {
+        if x == 0 {
+            Err("Cannot devide by zero")
+        } else {
+            Ok(x)
+        }
+    }).and_then(|x| {
+        Ok(x / 2)
+    });
     let matches = parse_arguments();
     let m_res = match fetch_parsed_arguments(&matches) {
         Ok(res) => res,
@@ -61,7 +66,7 @@ fn fetch_parsed_arguments(matches: &ArgMatches) -> Result<RequestArguments, Stri
         Ok(res) => res,
         Err(_) => {
             let err = format!("Timeout must be expressed in seconds");
-            return Err(err)
+            return Err(err);
         }
     };
 
