@@ -9,16 +9,6 @@ struct RequestArguments {
 }
 
 fn main() {
-    let mut res: Result<usize, &'static str> = Ok(0);
-    res = res.and_then(|x| {
-        if x == 0 {
-            Err("Cannot devide by zero")
-        } else {
-            Ok(x)
-        }
-    }).and_then(|x| {
-        Ok(x / 2)
-    });
     let matches = parse_arguments();
     let m_res = match fetch_parsed_arguments(&matches) {
         Ok(res) => res,
